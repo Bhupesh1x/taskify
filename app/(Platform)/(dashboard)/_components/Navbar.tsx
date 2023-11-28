@@ -4,9 +4,12 @@ import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import Logo from "@/components/shared/Logo";
 import { Button } from "@/components/ui/button";
 
+import MobileSidebar from "./MobileSidebar";
+
 function Navbar() {
   return (
     <div className="fixed z-50 top-0 bg-white border-b shadow w-full h-14 px-4 flex items-center">
+      <MobileSidebar />
       <Logo />
       <Button
         variant="primary"
