@@ -1,7 +1,16 @@
-function OrganizationIdPage() {
+import { Separator } from "@/components/ui/separator";
+
+import Info from "./_components/Info";
+import BoardList from "./_components/BoardList";
+
+async function OrganizationIdPage() {
   return (
-    <div>
-      <h1>OrganizationIdPage</h1>
+    <div className="flex flex-col space-y-4 w-full">
+      <Info />
+      <Separator className="my-4" />
+      <div className="px-2 md:px-4">
+        <BoardList />
+      </div>
     </div>
   );
 }
