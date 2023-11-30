@@ -3,6 +3,7 @@
 import { toast } from "sonner";
 import { X } from "lucide-react";
 import { ElementRef, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Popover,
@@ -31,12 +32,14 @@ function FormPopover({
   side = "bottom",
   sideOffset = 0,
 }: Props) {
+  const router = useRouter();
   const closeRef = useRef<ElementRef<"button">>(null);
 
   const { execute, fieldError } = useAction(createBoard, {
     onSuccess: (data) => {
       toast.success("Board created!");
       closeRef?.current?.click();
+      router.push(`/board/${data.id}`);
     },
     onError: (error) => {
       toast.error(error);
