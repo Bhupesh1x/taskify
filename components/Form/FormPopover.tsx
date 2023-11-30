@@ -2,6 +2,7 @@
 
 import { toast } from "sonner";
 import { X } from "lucide-react";
+import { ElementRef, useRef } from "react";
 
 import {
   Popover,
@@ -30,9 +31,12 @@ function FormPopover({
   side = "bottom",
   sideOffset = 0,
 }: Props) {
+  const closeRef = useRef<ElementRef<"button">>(null);
+
   const { execute, fieldError } = useAction(createBoard, {
     onSuccess: (data) => {
       toast.success("Board created!");
+      closeRef?.current?.click();
     },
     onError: (error) => {
       toast.error(error);
@@ -41,8 +45,9 @@ function FormPopover({
 
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
+    const image = formData.get("image") as string;
 
-    execute({ title });
+    execute({ title, image });
   };
 
   return (
@@ -57,7 +62,7 @@ function FormPopover({
         <div className="text-sm font-medium text-center text-neutral-600 pb-4">
           Create Board
         </div>
-        <PopoverClose asChild>
+        <PopoverClose ref={closeRef} asChild>
           <Button
             className="h-auto w-auto absolute top-2 right-2 p-2 text-neutral-600"
             variant="ghost"
