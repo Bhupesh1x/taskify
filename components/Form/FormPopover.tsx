@@ -10,11 +10,12 @@ import {
   PopoverClose,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-
-import { FormInput } from "./FormInput";
-import { FormSubmit } from "./FormSubmit";
 import { useAction } from "@/hooks/use-action";
 import { createBoard } from "@/actions/create-board";
+
+import FormPicker from "./FormPicker";
+import { FormInput } from "./FormInput";
+import { FormSubmit } from "./FormSubmit";
 
 type Props = {
   children: React.ReactNode;
@@ -67,6 +68,7 @@ function FormPopover({
 
         <form action={onSubmit} className="space-y-4">
           <div className="space-y-4">
+            <FormPicker id="image" errors={fieldError} />
             <FormInput
               id="title"
               label="Board Title"
