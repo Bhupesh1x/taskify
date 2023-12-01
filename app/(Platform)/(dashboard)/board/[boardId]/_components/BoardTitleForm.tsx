@@ -1,14 +1,21 @@
 "use client";
 
-import { FormInput } from "@/components/Form/FormInput";
-import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { ElementRef, useRef, useState } from "react";
 
+import { useAction } from "@/hooks/use-action";
+import { updateBoard } from "@/actions/update-board";
+
+import { Button } from "@/components/ui/button";
+import { FormInput } from "@/components/Form/FormInput";
+
 type Props = {
+  id: string;
   title: string;
 };
 
-function BoardTitleForm({ title }: Props) {
+function BoardTitleForm({ id, title }: Props) {
+  const [boardTitle, setBoardTitle] = useState(title);
   const [isEditing, setIsEditing] = useState(false);
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
@@ -25,9 +32,20 @@ function BoardTitleForm({ title }: Props) {
     setIsEditing(false);
   };
 
+  const { execute } = useAction(updateBoard, {
+    onSuccess: (data) => {
+      toast.success(`Board "${data.title}" updated!`);
+      setBoardTitle(data.title);
+      disableEditing();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
-    console.log("i am submitted", title);
+    execute({ title, id });
   };
 
   const onBlur = () => {
@@ -41,7 +59,7 @@ function BoardTitleForm({ title }: Props) {
           id="title"
           ref={inputRef}
           onBlur={onBlur}
-          defaultValue={title}
+          defaultValue={boardTitle}
           className="h-7 text-lg font-bold px-[7px] py-1 border-none focus-visible:ring-transparent focus-visible:outline-none bg-transparent"
         />
       </form>
@@ -54,7 +72,7 @@ function BoardTitleForm({ title }: Props) {
       variant="transparent"
       className="font-bold text-lg h-auto w-auto px-3 p-1"
     >
-      {title}
+      {boardTitle}
     </Button>
   );
 }

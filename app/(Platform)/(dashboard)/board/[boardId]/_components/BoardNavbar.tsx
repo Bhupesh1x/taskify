@@ -9,7 +9,7 @@ type Props = {
 function BoardNavbar({ board }: Props) {
   return (
     <div className="fixed top-14 bg-black/50 z-50 text-white w-full h-14 flex items-center px-6">
-      <BoardTitleForm title={board.title} />
+      <BoardTitleForm id={board.id} title={board.title} />
     </div>
   );
 }
