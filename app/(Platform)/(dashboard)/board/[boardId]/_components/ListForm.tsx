@@ -97,7 +97,7 @@ function ListForm() {
     <ListWrapper>
       <button
         onClick={enableEditing}
-        className="w-full rounded-md bg-white/80 hover:bg-white/50 flex items-center p-3 gap-x-2 text-sm font-medium transition"
+        className="w-full rounded-md bg-white/80 hover:bg-white/50 flex items-center p-3 pb-4 gap-x-2 text-sm font-medium transition"
       >
         <Plus className="h-4 w-4" />
         Add a list

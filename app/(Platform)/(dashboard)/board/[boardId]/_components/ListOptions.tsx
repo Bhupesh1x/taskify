@@ -1,6 +1,10 @@
 "use client";
 
+import { toast } from "sonner";
 import { MoreHorizontal, X } from "lucide-react";
+
+import { useAction } from "@/hooks/use-action";
+import { deleteList } from "@/actions/delete-list";
 
 import {
   Popover,
@@ -19,6 +23,19 @@ type Props = {
 };
 
 function ListOptions({ id, boardId, onAddCard }: Props) {
+  const { execute: executeDelete } = useAction(deleteList, {
+    onSuccess: (data) => {
+      toast.success(`List "${data.title}" deleted.`);
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const onDelete = () => {
+    executeDelete({ id, boardId });
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -53,7 +70,7 @@ function ListOptions({ id, boardId, onAddCard }: Props) {
           </FormSubmit>
         </form>
         <Separator />
-        <form>
+        <form action={onDelete}>
           <FormSubmit
             className="justify-start text-sm font-normal rounded-none h-auto w-full p-2 px-5"
             variant="ghost"
