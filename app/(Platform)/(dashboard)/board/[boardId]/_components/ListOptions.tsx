@@ -1,9 +1,11 @@
 "use client";
 
 import { toast } from "sonner";
+import { ElementRef, useRef } from "react";
 import { MoreHorizontal, X } from "lucide-react";
 
 import { useAction } from "@/hooks/use-action";
+import { copyList } from "@/actions/copy-list";
 import { deleteList } from "@/actions/delete-list";
 
 import {
@@ -23,9 +25,22 @@ type Props = {
 };
 
 function ListOptions({ id, boardId, onAddCard }: Props) {
+  const closeRef = useRef<ElementRef<"button">>(null);
+
   const { execute: executeDelete } = useAction(deleteList, {
     onSuccess: (data) => {
       toast.success(`List "${data.title}" deleted.`);
+      closeRef.current?.click();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const { execute: executeCopy } = useAction(copyList, {
+    onSuccess: (data) => {
+      toast.success(`List "${data.title}" copied.`);
+      closeRef.current?.click();
     },
     onError: (error) => {
       toast.error(error);
@@ -34,6 +49,10 @@ function ListOptions({ id, boardId, onAddCard }: Props) {
 
   const onDelete = () => {
     executeDelete({ id, boardId });
+  };
+
+  const onCopy = () => {
+    executeCopy({ id, boardId });
   };
 
   return (
@@ -47,7 +66,7 @@ function ListOptions({ id, boardId, onAddCard }: Props) {
         <p className="text-sm font-medium text-neutral-600 text-center pb-4">
           List Actions
         </p>
-        <PopoverClose asChild>
+        <PopoverClose ref={closeRef} asChild>
           <Button
             className="absolute right-2 top-2 h-auto w-auto p-2 text-neutral-600"
             variant="ghost"
@@ -61,7 +80,7 @@ function ListOptions({ id, boardId, onAddCard }: Props) {
         >
           Add card...
         </Button>
-        <form>
+        <form action={onCopy}>
           <FormSubmit
             className="justify-start text-sm font-normal rounded-none h-auto w-full p-2 px-5"
             variant="ghost"
