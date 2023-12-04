@@ -1,8 +1,13 @@
 "use client";
 
+import { toast } from "sonner";
 import { Plus, X } from "lucide-react";
 import { ElementRef, useRef, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
+
+import { useAction } from "@/hooks/use-action";
+import { createList } from "@/actions/create-list";
 
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/Form/FormInput";
@@ -11,6 +16,9 @@ import { FormSubmit } from "@/components/Form/FormSubmit";
 import ListWrapper from "./ListWrapper";
 
 function ListForm() {
+  const params = useParams();
+  const router = useRouter();
+
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
 
@@ -27,6 +35,24 @@ function ListForm() {
     setIsEditing(false);
   };
 
+  const { execute, fieldError } = useAction(createList, {
+    onSuccess: (data) => {
+      toast.success(`List "${data.title}" created.`);
+      setIsEditing(false);
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get("title") as string;
+    const boardId = params.boardId as string;
+
+    execute({ title, boardId });
+  };
+
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       disableEditing();
@@ -40,7 +66,7 @@ function ListForm() {
     return (
       <ListWrapper>
         <form
-          action=""
+          action={onSubmit}
           ref={formRef}
           className="w-full p-3 rounded-md bg-white space-y-4 shadow-md"
         >
@@ -49,6 +75,7 @@ function ListForm() {
             id="title"
             placeholder="Enter list title..."
             className="text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
+            errors={fieldError}
           />
           <div className="flex items-center gap-x-2">
             <FormSubmit>Add List</FormSubmit>
