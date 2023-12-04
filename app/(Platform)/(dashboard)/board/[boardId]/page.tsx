@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+
 import ListContainer from "./_components/ListContainer";
 
 type Props = {
@@ -34,7 +35,7 @@ async function BoardIdPage({ params }: Props) {
   });
 
   return (
-    <div>
+    <div className="overflow-auto h-full">
       <ListContainer boardId={params.boardId} lists={lists} />
     </div>
   );

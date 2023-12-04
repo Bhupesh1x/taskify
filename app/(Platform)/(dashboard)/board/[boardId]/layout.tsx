@@ -56,7 +56,7 @@ async function BoardIdLayout({
     >
       <BoardNavbar board={board} />
       <div className="absolute inset-0 bg-black/10" />
-      <main className="relative pt-28">{children}</main>
+      <main className="relative pt-28 h-full">{children}</main>
     </div>
   );
 }
