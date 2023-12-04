@@ -8,6 +8,7 @@ import { useAction } from "@/hooks/use-action";
 import { updateList } from "@/actions/update-list";
 
 import { FormInput } from "@/components/Form/FormInput";
+import ListOptions from "./ListOptions";
 
 type Props = {
   id: string;
@@ -87,6 +88,7 @@ function ListHeader({ id, boardId, listTitle }: Props) {
           {title}
         </div>
       )}
+      <ListOptions id={id} boardId={boardId} onAddCard={() => {}} />
     </div>
   );
 }
