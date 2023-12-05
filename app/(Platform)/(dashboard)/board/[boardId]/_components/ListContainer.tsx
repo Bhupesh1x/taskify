@@ -1,9 +1,13 @@
 "use client";
 
+import { toast } from "sonner";
 import { ListWithCards } from "@/types";
 import { useEffect, useState } from "react";
-
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+
+import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
+import { updateCardOrder } from "@/actions/update-card-order";
 
 import ListForm from "./ListForm";
 import ListItem from "./ListItem";
@@ -28,6 +32,24 @@ function ListContainer({ boardId, lists }: Props) {
     setOrderedList(lists);
   }, [lists]);
 
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("List Reordered");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
+    onSuccess: () => {
+      toast.success("Card Reordered");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
   const onDragEnd = (result: any) => {
     const { destination, source, type } = result;
 
@@ -48,7 +70,9 @@ function ListContainer({ boardId, lists }: Props) {
       const items = reorder(orderedList, source.index, destination.index).map(
         (item, index) => ({ ...item, order: index })
       );
+
       setOrderedList(items);
+      executeUpdateListOrder({ items, boardId });
     }
 
     // user moves a card
@@ -92,7 +116,7 @@ function ListContainer({ boardId, lists }: Props) {
         sourceList.cards = reorderedCards;
 
         setOrderedList(newOrderedList);
-        // TODO: Server action call
+        executeUpdateCardOrder({ boardId, items: reorderedCards });
       }
       // User Moves card to another list
       else {
@@ -116,7 +140,7 @@ function ListContainer({ boardId, lists }: Props) {
         });
 
         setOrderedList(newOrderedList);
-        // TODO: Server action call
+        executeUpdateCardOrder({ boardId, items: destList.cards });
       }
     }
   };
