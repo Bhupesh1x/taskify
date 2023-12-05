@@ -14,9 +14,10 @@ type Props = {
   id: string;
   boardId: string;
   listTitle: string;
+  onAddCard: () => void;
 };
 
-function ListHeader({ id, boardId, listTitle }: Props) {
+function ListHeader({ id, boardId, listTitle, onAddCard }: Props) {
   const [title, setTitle] = useState(listTitle);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -88,7 +89,7 @@ function ListHeader({ id, boardId, listTitle }: Props) {
           {title}
         </div>
       )}
-      <ListOptions id={id} boardId={boardId} onAddCard={() => {}} />
+      <ListOptions id={id} boardId={boardId} onAddCard={onAddCard} />
     </div>
   );
 }
