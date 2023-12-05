@@ -1,5 +1,7 @@
 import { Card } from "@prisma/client";
 
+import { Draggable } from "@hello-pangea/dnd";
+
 type Props = {
   index: number;
   card: Card;
@@ -7,12 +9,19 @@ type Props = {
 
 function CardItem({ card, index }: Props) {
   return (
-    <div
-      role="button"
-      className="truncate bg-white shadow-sm border-2 border-transparent hover:border-black py-2 px-3 text-sm rounded-md"
-    >
-      {card.title}
-    </div>
+    <Draggable draggableId={card.id} index={index}>
+      {(provided) => (
+        <div
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          role="button"
+          className="truncate bg-white shadow-sm border-2 border-transparent hover:border-black py-2 px-3 text-sm rounded-md"
+        >
+          {card.title}
+        </div>
+      )}
+    </Draggable>
   );
 }
 
