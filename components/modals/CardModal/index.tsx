@@ -8,6 +8,8 @@ import { useCardModal } from "@/hooks/use-card-modal";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
+import Header from "./Header";
+
 function CardModal() {
   const { id, isOpen, onClose } = useCardModal();
 
@@ -19,7 +21,7 @@ function CardModal() {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
-        <h1>{cardData?.title}</h1>
+        {cardData ? <Header card={cardData} /> : <Header.Skeleton />}
       </DialogContent>
     </Dialog>
   );
