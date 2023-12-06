@@ -75,6 +75,7 @@ function ListOptions({ id, boardId, onAddCard }: Props) {
           </Button>
         </PopoverClose>
         <Button
+          onClick={onAddCard}
           className="justify-start text-sm font-normal rounded-none h-auto w-full p-2 px-5"
           variant="ghost"
         >
