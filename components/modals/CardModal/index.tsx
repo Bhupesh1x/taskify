@@ -9,6 +9,7 @@ import { useCardModal } from "@/hooks/use-card-modal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import Header from "./Header";
+import Actions from "./Actions";
 import Description from "./Description";
 
 function CardModal() {
@@ -34,6 +35,7 @@ function CardModal() {
               )}
             </div>
           </div>
+          {cardData ? <Actions card={cardData} /> : <Actions.Skeleton />}
         </div>
       </DialogContent>
     </Dialog>
