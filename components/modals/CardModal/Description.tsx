@@ -48,6 +48,11 @@ function Description({ card }: Props) {
       queryClient.invalidateQueries({
         queryKey: ["card", card.id],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["card-logs", card.id],
+      });
+
       toast.success(`Card "${data.title}" updated`);
       disableEditing();
     },

@@ -2,8 +2,10 @@
 
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 import { db } from "@/lib/db";
+import { createAuditLog } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-actions";
 
 import { DeleteCard } from "./schema";
@@ -25,13 +27,19 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     card = await db.card.delete({
       where: {
         id,
-        // boardId,
         list: {
           board: {
             orgId,
           },
         },
       },
+    });
+
+    await createAuditLog({
+      entityId: card.id,
+      entityTitle: card.title,
+      entityType: ENTITY_TYPE.CARD,
+      action: ACTION.DELETE,
     });
   } catch (error) {
     return {

@@ -10,7 +10,7 @@ type Props = {
 
 function ActivityItem({ log }: Props) {
   return (
-    <li className="flex items-center gap-x-2">
+    <li className="flex items-center gap-x-2 mb-2">
       <Avatar className="h-8 w-8">
         <AvatarImage src={log.userImage} />
       </Avatar>
