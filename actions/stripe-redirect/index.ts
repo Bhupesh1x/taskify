@@ -1,17 +1,15 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
-import { ACTION, ENTITY_TYPE } from "@prisma/client";
+import { auth, currentUser } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
-import { createAuditLog } from "@/lib/create-audit-log";
+import { stripe } from "@/lib/stripe";
+import { absoluteUrl } from "@/lib/utils";
 import { createSafeAction } from "@/lib/create-safe-actions";
 
 import { StripeRedirect } from "./schema";
 import { InputType, ReturnType } from "./types";
-import { absoluteUrl } from "@/lib/utils";
-import { stripe } from "@/lib/stripe";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -50,12 +48,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         line_items: [
           {
             price_data: {
-              currency: "USD",
+              currency: "INR",
               product_data: {
                 name: "Taskify Pro",
                 description: "Unlimited boards for the organization",
               },
-              unit_amount: 2000,
+              unit_amount: 160000,
               recurring: {
                 interval: "month",
               },

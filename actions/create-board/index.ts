@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 import { db } from "@/lib/db";
+import { checkSubscription } from "@/lib/subscription";
 import { createAuditLog } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-actions";
 import { hasAvaiableCount, increaseAvaiableCount } from "@/lib/org-limit";
@@ -22,8 +23,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   const canCreate = await hasAvaiableCount();
+  const isPro = await checkSubscription();
 
-  if (!canCreate) {
+  if (!canCreate && !isPro) {
     return {
       error:
         "You have reached the limit of free boards. Please upgrade to create more.",
@@ -61,7 +63,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
-    await increaseAvaiableCount();
+    if (!isPro) {
+      await increaseAvaiableCount();
+    }
 
     await createAuditLog({
       entityId: board.id,

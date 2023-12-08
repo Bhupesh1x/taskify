@@ -6,6 +6,7 @@ import { HelpCircle, User2 } from "lucide-react";
 import { db } from "@/lib/db";
 import { getAvaiableCount } from "@/lib/org-limit";
 import { MAX_BOARD_LIMIT } from "@/constants/boards";
+import { checkSubscription } from "@/lib/subscription";
 
 import Hint from "@/components/shared/Hint";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -26,6 +27,7 @@ async function BoardList() {
   });
 
   const availableCount = await getAvaiableCount();
+  const isPro = await checkSubscription();
 
   return (
     <div className="space-y-4">
@@ -56,7 +58,9 @@ async function BoardList() {
           >
             <p className="text-lg font-semibold">Create new board</p>
             <p className="text-sm">
-              {`${MAX_BOARD_LIMIT - availableCount}`} board remaining
+              {isPro
+                ? "Unlimited"
+                : `${MAX_BOARD_LIMIT - availableCount} board remaining`}
             </p>
             <Hint
               sideOffset={40}
