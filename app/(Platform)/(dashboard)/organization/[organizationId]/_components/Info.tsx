@@ -7,7 +7,11 @@ import { CreditCard } from "lucide-react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-function Info() {
+type Props = {
+  isPro: Boolean;
+};
+
+function Info({ isPro }: Props) {
   const { organization, isLoaded } = useOrganization();
 
   if (!isLoaded) {
@@ -29,7 +33,7 @@ function Info() {
 
         <div className="flex items-center gap-x-1 text-xs text-muted-foreground font-medium">
           <CreditCard className="h-3 w-3 mr-1" />
-          <p>Free</p>
+          <p>{isPro ? "Pro" : "Free"}</p>
         </div>
       </div>
     </div>
