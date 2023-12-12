@@ -1,6 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Fullstack TASK MANAGEMENT Web App using: Next.js 14, Server Actions, React, Prisma, Stripe, Clerk, Tailwind CSS, MySQL
 
-## Getting Started
+Key Features:
+- Auth 
+- Organizations / Workspaces
+- Board creation
+- Unsplash API for random beautiful cover images
+- Activity log for entire organization
+- Board rename and delete
+- List creation
+- List rename, delete, drag & drop reorder and copy
+- Card creation
+- Card description, rename, delete, drag & drop reorder and copy
+- Card activity log
+- Board limit for every organization
+- Stripe subscription for each organization to unlock unlimited boards
+- Landing page
+- MySQL DB
+- Prisma ORM
+- shadcnUI & TailwindCSS
+
+
 
 First, run the development server:
 
@@ -12,7 +31,12 @@ yarn dev
 pnpm dev
 # or
 bun dev
+
 ```
+
+## Video Demonstrating main functionality:
+
+https://github-production-user-asset-6210df.s3.amazonaws.com/78196557/289979978-731fc739-1822-48aa-9a13-4b6188ba67a3.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231212T192718Z&X-Amz-Expires=300&X-Amz-Signature=93855f6db2e090a755c0126219275dadeb3defb8d371122861e97ca7e1eea039&X-Amz-SignedHeaders=host&actor_id=78196557&key_id=0&repo_id=722970228
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
