@@ -21,6 +21,13 @@ Key Features:
 
 
 
+## Video demonstrating the key features:
+
+https://github-production-user-asset-6210df.s3.amazonaws.com/78196557/289979978-731fc739-1822-48aa-9a13-4b6188ba67a3.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231212T192718Z&X-Amz-Expires=300&X-Amz-Signature=93855f6db2e090a755c0126219275dadeb3defb8d371122861e97ca7e1eea039&X-Amz-SignedHeaders=host&actor_id=78196557&key_id=0&repo_id=722970228
+
+
+
+
 First, run the development server:
 
 ```bash
@@ -33,10 +40,6 @@ pnpm dev
 bun dev
 
 ```
-
-## Video demonstrating the key features:
-
-https://github-production-user-asset-6210df.s3.amazonaws.com/78196557/289979978-731fc739-1822-48aa-9a13-4b6188ba67a3.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231212%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231212T192718Z&X-Amz-Expires=300&X-Amz-Signature=93855f6db2e090a755c0126219275dadeb3defb8d371122861e97ca7e1eea039&X-Amz-SignedHeaders=host&actor_id=78196557&key_id=0&repo_id=722970228
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
